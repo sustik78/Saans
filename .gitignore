@@ -1,0 +1,9 @@
+node_modules/
+dist/
+artifacts/
+.env
+*.mp4
+*.webm
+*.mp3
+__pycache__/
+.sites/

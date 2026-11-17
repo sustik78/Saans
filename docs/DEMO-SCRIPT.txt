@@ -1,0 +1,13 @@
+Winter smog changes more than the skyline. It changes how families travel, exercise, and care for their homes. Meet Saans: an urban air quality assistant that turns household context into an explainable daily plan.
+
+Start with your city and a current Indian air quality index. These sample readings are clearly marked as demo data. Saans does not pretend to provide live monitoring or predict a safe hour to go outdoors.
+
+Here is our first scenario: a daily commute in New Delhi, at an AQI of three hundred and forty two. The assistant puts exposure precautions first, recommends a shorter connection to public transport, and moves strenuous exercise indoors. Each action includes the reason and its practical impact.
+
+Now the context changes. A child has asthma, the family has no purifier, and public transport is unavailable. Saans remembers these constraints. It switches to combining essential errands and prioritises no cost indoor source control, instead of recommending something the family cannot access.
+
+What happens when the information conflicts? Give Saans two different AQI readings. It asks which reading to use, rather than guessing. Missing information stays visible, and environmental benefits are explained without invented carbon savings or health guarantees.
+
+The decision engine works without a paid API. Optional generative AI can explain the structured plan, while provider failure preserves the underlying recommendations. Context can be cleared at any time.
+
+Saans is built around one simple idea: practical, transparent choices for real families on polluted days.
