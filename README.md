@@ -1,4 +1,4 @@
-# Saans — clarity inside, when there is smog outside
+# Saans - clarity inside, when there is smog outside
 
 Official vertical: **Urban Air Quality Assistant**. Target persona: urban Indian families and communities planning winter-smog routines, including households with sensitive members and limited budgets.
 
