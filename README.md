@@ -78,5 +78,6 @@ Semantic landmarks, labels, native form validation, skip link, keyboard controls
 ## Assumptions, limitations, improvements
 English rules-based parsing supports the demonstrated vocabulary, not arbitrary language or complex negation. Users must verify extracted context in the form. City changes the plan’s label, not an invented geographic forecast or transit route. Indoor air is not measured; AQI cannot identify personal exposure. This is planning support, not diagnosis, treatment or emergency dispatch. Future work: official monitor integration with freshness/scale checks, multilingual validated extraction, route data, expert rule review, and broader assistive-technology tests. See `docs/ASSUMPTIONS.md`.
 
-## Submission state
-Sites deployment is separate from a public GitHub repository. No GitHub remote has been created or modified, and no official competition submission has been performed. Public GitHub publication requires your explicit authorization. Keep exactly one `main` branch and repository/history below 10 MB. Video files live in ignored local artifacts, outside the source submission.
+## Deployment and submission state
+Site: https://saans-family-air-planner.sublimeskylark.chatgpt.site (owner-private). Sites deployment is separate from the public GitHub repository. Source is published with user authorization at https://github.com/sustik78/Saans on its only branch, main. Fresh-clone installation, 29 tests and build passed. Git history and metadata measured 59,082 bytes in the fresh clone. No official competition submission has been performed. Keep exactly one `main` branch and repository/history below 10 MB. Video files live in ignored local artifacts, outside the source submission.
+

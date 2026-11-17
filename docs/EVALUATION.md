@@ -18,4 +18,5 @@ Eight browser scenarios: first plan; context followup; reload continuity; confli
 Initial automated audit found insufficient contrast in three decorative principle numbers; colour was darkened and the audit rerun successfully. Tests do not establish full WCAG compliance or complete natural-language understanding.
 
 ## Submission gates
-Official vertical confirmed. Public GitHub remote, public visibility and fresh GitHub clone remain pending user authorization. Sites source synchronization is a separate service repository. No official submission attempted. Video and QA artifacts are ignored from Git. Repository history size and branch count are audited after source packaging.
+Official vertical confirmed. User-authorised GitHub push completed: https://github.com/sustik78/Saans . Public visibility verified; exactly one remote branch, main. Fresh clone npm ci, 29 tests and build passed. Fresh clone Git directory including history: 59,082 bytes (well below 10 MB). Sites source synchronization is a separate service repository. No official submission attempted. Video and QA artifacts are ignored from Git. Repository history size and branch count are audited after source packaging.
+
