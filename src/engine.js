@@ -72,16 +72,18 @@ export function understand(message, previous) {
   if (/\b(cannot work from home|can't work from home|must commute)\b/.test(m))
     set("remote", false);
   else if (/\b(work from home|remote work)\b/.test(m)) set("remote", true);
-  if (/\b(no purifier|cannot afford|can't afford|low budget)\b/.test(m)) {
+  if (/\b(no purifier|without (?:an? )?(?:air )?purifier)\b/.test(m))
     set("purifier", false);
-    set("budget", "low");
-  } else if (/\b(have a purifier|have an air purifier)\b/.test(m))
+  else if (/\bhave an? (?:air )?purifier\b/.test(m))
     set("purifier", true);
+  if (/\b(cannot afford|can't afford|low budget)\b/.test(m))
+    set("budget", "low");
   const time = m.match(/\b(\d{1,3})\s*minutes?\b/);
   if (time) set("minutes", Number(time[1]));
+  const travelRequested = /\b(commute|travel|school|walk|cycle|bus|metro)\b/.test(m);
   const intent = /\b(why|explain)\b/.test(m)
     ? "explain"
-    : /\b(indoor|window|home air|purifier|cooking)\b/.test(m)
+    : !travelRequested && /\b(indoor|window|home air|purifier|cooking)\b/.test(m)
       ? "indoor"
       : /\b(commute|travel|school|walk|cycle|routine|plan|smog|air|pollution|aqi)\b/.test(
             m,

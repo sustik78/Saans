@@ -18,3 +18,14 @@ test('API method health and missing routes',async()=>{assert.equal((await handle
 test('demo mode and AI not configured preserve decisions',async()=>{const r=await (await handle(request({message:'plan',context:defaults,enhance:true}))).json();assert.match(r.provider,/not configured/);assert.equal(r.decision.actions[0].id,'transit');});
 test('provider failure retains deterministic plan',async()=>{const original=globalThis.fetch;try{globalThis.fetch=async()=>{throw Error('offline');};const r=await (await handle(request({message:'plan',context:defaults,enhance:true}),{OPENAI_API_KEY:'test-only'})).json();assert.match(r.provider,/unavailable/);assert.equal(r.decision.status,'caution');}finally{globalThis.fetch=original;}});
 test('provider successful explanation cannot replace action list',async()=>{const original=globalThis.fetch;try{globalThis.fetch=async()=>Response.json({output:[{content:[{type:'output_text',text:'Your plan prioritises less outdoor exertion.'}]}]});const r=await (await handle(request({message:'plan',context:defaults,enhance:true}),{OPENAI_API_KEY:'test-only'})).json();assert.ok(r.narrative);assert.equal(r.decision.actions.length,4);}finally{globalThis.fetch=original;}});
+test('budget changes preserve equipment already owned', () => {
+  const result = respond('Low budget this week', {...defaults, purifier: true});
+  assert.equal(result.context.purifier, true);
+  assert.ok(result.decision.actions.some(action => action.id === 'filter'));
+});
+test('mixed commute and indoor requests address both needs', () => {
+  const result = respond('I must commute. No metro and no purifier.', defaults);
+  const actions = result.decision.actions.map(action => action.id);
+  assert.ok(actions.includes('essential'));
+  assert.ok(actions.includes('sources'));
+});
