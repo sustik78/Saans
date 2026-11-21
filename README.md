@@ -14,7 +14,7 @@ Families need feasible daily choices, not an unexplained chatbot answer. Saans c
 - Offline decision engine; optional server-side generative explanation, with failure fallback.
 
 ## Architecture and decision logic
-`public/app.js` renders safe text and calls `/api/assist`. `src/worker.js` validates requests and optionally calls the OpenAI Responses API. `src/engine.js` implements independently tested rules shared by server and browser. If the server fails, the same browser engine continues working.
+`public/app.js` renders safe text and runs ordinary plans locally. Only optional AI requests call `/api/assist`. `src/worker.js` validates requests and optionally calls the OpenAI Responses API. `src/engine.js` implements independently tested rules shared by server and browser. If the server fails, the same browser engine continues working.
 
 Order: input → validation → intent/context extraction → conflict or urgency gate → constrained action selection → reasons/impact → user feedback. AQI >200 triggers precautionary travel/exertion rules; sensitive households trigger these at >100. These are application policy thresholds informed by NCDC guidance, not personalised medical advice. Remote work takes precedence when available; otherwise transport access decides whether transit or combined essential journeys is proposed. No numerical confidence, pollutant reduction or carbon saving is invented. Outdoor minutes are displayed as context, never a safe limit.
 
