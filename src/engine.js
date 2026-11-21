@@ -35,6 +35,31 @@ export function category(aqi) {
             ? "Very poor"
             : "Severe";
 }
+// Each field has explicit negative and positive phrases. Check negatives first
+// because "no metro" also contains the positive word "metro".
+const householdRules = [
+  {
+    field: "sensitive",
+    negative: /\b(no children|no vulnerable|no sensitive)\b/,
+    positive: /\b(child|children|asthma|elderly|pregnant|baby)\b/,
+  },
+  {
+    field: "transit",
+    negative: /\b(no metro|no transit|no bus)\b/,
+    positive: /\b(metro|bus|transit)\b/,
+  },
+  {
+    field: "remote",
+    negative: /\b(cannot work from home|can't work from home|must commute)\b/,
+    positive: /\b(work from home|remote work)\b/,
+  },
+  {
+    field: "purifier",
+    negative: /\b(no purifier|without (?:an? )?(?:air )?purifier)\b/,
+    positive: /\bhave an? (?:air )?purifier\b/,
+  },
+];
+
 export function understand(message, previous) {
   if (typeof message !== "string" || message.length > 1200 || !message.trim())
     throw Error("Enter a message of 1–1200 characters.");
@@ -63,27 +88,20 @@ export function understand(message, previous) {
         "You gave different AQI readings. Which current Indian AQI reading should I use?",
     };
   if (readings.length) set("aqi", readings[0]);
-  if (/\b(no children|no vulnerable|no sensitive)\b/.test(m))
-    set("sensitive", false);
-  else if (/\b(child|children|asthma|elderly|pregnant|baby)\b/.test(m))
-    set("sensitive", true);
-  if (/\b(no metro|no transit|no bus)\b/.test(m)) set("transit", false);
-  else if (/\b(metro|bus|transit)\b/.test(m)) set("transit", true);
-  if (/\b(cannot work from home|can't work from home|must commute)\b/.test(m))
-    set("remote", false);
-  else if (/\b(work from home|remote work)\b/.test(m)) set("remote", true);
-  if (/\b(no purifier|without (?:an? )?(?:air )?purifier)\b/.test(m))
-    set("purifier", false);
-  else if (/\bhave an? (?:air )?purifier\b/.test(m))
-    set("purifier", true);
+  for (const { field, negative, positive } of householdRules) {
+    if (negative.test(m)) set(field, false);
+    else if (positive.test(m)) set(field, true);
+  }
   if (/\b(cannot afford|can't afford|low budget)\b/.test(m))
     set("budget", "low");
   const time = m.match(/\b(\d{1,3})\s*minutes?\b/);
   if (time) set("minutes", Number(time[1]));
-  const travelRequested = /\b(commute|travel|school|walk|cycle|bus|metro)\b/.test(m);
+  const travelRequested =
+    /\b(commute|travel|school|walk|cycle|bus|metro)\b/.test(m);
   const intent = /\b(why|explain)\b/.test(m)
     ? "explain"
-    : !travelRequested && /\b(indoor|window|home air|purifier|cooking)\b/.test(m)
+    : !travelRequested &&
+        /\b(indoor|window|home air|purifier|cooking)\b/.test(m)
       ? "indoor"
       : /\b(commute|travel|school|walk|cycle|routine|plan|smog|air|pollution|aqi)\b/.test(
             m,
